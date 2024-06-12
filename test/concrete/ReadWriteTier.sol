@@ -49,50 +49,46 @@ contract ReadWriteTier is TierV2 {
         // interacted with the contract.
         require(endTier > 0, "SET_ZERO_TIER");
 
-        uint256 report = report(account, new uint256[](0));
+        uint256 oldReport = report(account, new uint256[](0));
 
-        uint256 startTier = LibTierReport.tierAtTimeFromReport(report, block.timestamp);
+        uint256 startTier = LibTierReport.tierAtTimeFromReport(oldReport, block.timestamp);
 
-        sReports[account] = LibTierReport.updateReportWithTierAtTime(report, startTier, endTier, block.timestamp);
+        sReports[account] = LibTierReport.updateReportWithTierAtTime(oldReport, startTier, endTier, block.timestamp);
 
         emit TierChange(msg.sender, account, startTier, endTier);
     }
 
     /// Re-export TierReport utilities
 
-    function tierAtTimeFromReport(uint256 report, uint256 timestamp) external pure returns (uint256 tier_) {
-        return LibTierReport.tierAtTimeFromReport(report, timestamp);
+    function tierAtTimeFromReport(uint256 inputReport, uint256 timestamp) external pure returns (uint256) {
+        return LibTierReport.tierAtTimeFromReport(inputReport, timestamp);
     }
 
-    function reportTimeForTier(uint256 report, uint256 tier) external pure returns (uint256 timestamp_) {
-        return LibTierReport.reportTimeForTier(report, tier);
+    function reportTimeForTier(uint256 inputReport, uint256 tier) external pure returns (uint256) {
+        return LibTierReport.reportTimeForTier(inputReport, tier);
     }
 
-    function truncateTiersAbove(uint256 report, uint256 tier) external pure returns (uint256) {
-        return LibTierReport.truncateTiersAbove(report, tier);
+    function truncateTiersAbove(uint256 inputReport, uint256 tier) external pure returns (uint256) {
+        return LibTierReport.truncateTiersAbove(inputReport, tier);
     }
 
-    function updateTimeAtTier(uint256 report, uint256 tier, uint256 timestamp)
+    function updateTimeAtTier(uint256 inputReport, uint256 tier, uint256 timestamp) external pure returns (uint256) {
+        return LibTierReport.updateTimeAtTier(inputReport, tier, timestamp);
+    }
+
+    function updateTimesForTierRange(uint256 inputReport, uint256 startTier, uint256 endTier, uint256 timestamp)
         external
         pure
-        returns (uint256 updatedReport)
+        returns (uint256)
     {
-        return LibTierReport.updateTimeAtTier(report, tier, timestamp);
+        return LibTierReport.updateTimesForTierRange(inputReport, startTier, endTier, timestamp);
     }
 
-    function updateTimesForTierRange(uint256 report, uint256 startTier, uint256 endTier, uint256 timestamp)
+    function updateReportWithTierAtTime(uint256 inputReport, uint256 startTier, uint256 endTier, uint256 timestamp)
         external
         pure
-        returns (uint256 updatedReport)
+        returns (uint256)
     {
-        return LibTierReport.updateTimesForTierRange(report, startTier, endTier, timestamp);
-    }
-
-    function updateReportWithTierAtTime(uint256 report_, uint256 startTier_, uint256 endTier_, uint256 timestamp_)
-        external
-        pure
-        returns (uint256 updatedReport)
-    {
-        return LibTierReport.updateReportWithTierAtTime(report_, startTier_, endTier_, timestamp_);
+        return LibTierReport.updateReportWithTierAtTime(inputReport, startTier, endTier, timestamp);
     }
 }
