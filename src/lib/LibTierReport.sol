@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: CAL
 pragma solidity ^0.8.18;
 
-import {ITierV2} from "../interface/ITierV2.sol";
 import {LibTierConstants} from "./LibTierConstants.sol";
 
 /// @title LibTierReport
