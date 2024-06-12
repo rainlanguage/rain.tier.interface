@@ -74,11 +74,10 @@ interface ITierV2 {
     /// calculate the report time.
     /// @return time The time that the tier has been held continuously since, or
     /// `type(uint32).max` if the tier has never been held.
-    function reportTimeForTier(
-        address account,
-        uint256 tier,
-        uint256[] calldata context
-    ) external view returns (uint256 time);
+    function reportTimeForTier(address account, uint256 tier, uint256[] calldata context)
+        external
+        view
+        returns (uint256 time);
 
     /// Returns an 8 tier encoded report of 32 bit timestamps for the given
     /// account.
@@ -99,8 +98,5 @@ interface ITierV2 {
     /// calculate the report.
     /// @return times All of the times for every tier the `account` has held
     /// continuously, encoded as 8x `uint32` values within a single `uint256`.
-    function report(
-        address account,
-        uint256[] calldata context
-    ) external view returns (uint256 times);
+    function report(address account, uint256[] calldata context) external view returns (uint256 times);
 }
