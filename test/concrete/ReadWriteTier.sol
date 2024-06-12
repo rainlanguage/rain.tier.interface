@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CAL
 pragma solidity =0.8.25;
 
-import {TierV2} from "src/abstract/TierV2.sol";
+import {ITierV2, TierV2} from "src/abstract/TierV2.sol";
 import {LibTierConstants} from "src/lib/LibTierConstants.sol";
 import {LibTierReport} from "src/lib/LibTierReport.sol";
 
@@ -32,12 +32,12 @@ contract ReadWriteTier is TierV2 {
     /// @inheritdoc ITierV2
     function report(address account, uint256[] memory) public view virtual override returns (uint256) {
         // Inequality here to silence slither warnings.
-        return reports[account] > 0 ? reports[account] : TierConstants.NEVER_REPORT;
+        return sReports[account] > 0 ? sReports[account] : LibTierConstants.NEVER_REPORT;
     }
 
     /// @inheritdoc ITierV2
     function reportTimeForTier(address account, uint256 tier, uint256[] memory) external view returns (uint256) {
-        return TierReport.reportTimeForTier(report(account, new uint256[](0)), tier);
+        return LibTierReport.reportTimeForTier(report(account, new uint256[](0)), tier);
     }
 
     /// Errors if the user attempts to return to the ZERO tier.
@@ -51,9 +51,9 @@ contract ReadWriteTier is TierV2 {
 
         uint256 report = report(account, new uint256[](0));
 
-        uint256 startTier = TierReport.tierAtTimeFromReport(report, block.timestamp);
+        uint256 startTier = LibTierReport.tierAtTimeFromReport(report, block.timestamp);
 
-        reports[account] = TierReport.updateReportWithTierAtTime(report, startTier, endTier, block.timestamp);
+        sReports[account] = LibTierReport.updateReportWithTierAtTime(report, startTier, endTier, block.timestamp);
 
         emit TierChange(msg.sender, account, startTier, endTier);
     }
@@ -61,15 +61,15 @@ contract ReadWriteTier is TierV2 {
     /// Re-export TierReport utilities
 
     function tierAtTimeFromReport(uint256 report, uint256 timestamp) external pure returns (uint256 tier_) {
-        return TierReport.tierAtTimeFromReport(report, timestamp);
+        return LibTierReport.tierAtTimeFromReport(report, timestamp);
     }
 
     function reportTimeForTier(uint256 report, uint256 tier) external pure returns (uint256 timestamp_) {
-        return TierReport.reportTimeForTier(report, tier);
+        return LibTierReport.reportTimeForTier(report, tier);
     }
 
     function truncateTiersAbove(uint256 report, uint256 tier) external pure returns (uint256) {
-        return TierReport.truncateTiersAbove(report, tier);
+        return LibTierReport.truncateTiersAbove(report, tier);
     }
 
     function updateTimeAtTier(uint256 report, uint256 tier, uint256 timestamp)
@@ -77,7 +77,7 @@ contract ReadWriteTier is TierV2 {
         pure
         returns (uint256 updatedReport)
     {
-        return TierReport.updateTimeAtTier(report, tier, timestamp);
+        return LibTierReport.updateTimeAtTier(report, tier, timestamp);
     }
 
     function updateTimesForTierRange(uint256 report, uint256 startTier, uint256 endTier, uint256 timestamp)
@@ -85,7 +85,7 @@ contract ReadWriteTier is TierV2 {
         pure
         returns (uint256 updatedReport)
     {
-        return TierReport.updateTimesForTierRange(report, startTier, endTier, timestamp);
+        return LibTierReport.updateTimesForTierRange(report, startTier, endTier, timestamp);
     }
 
     function updateReportWithTierAtTime(uint256 report_, uint256 startTier_, uint256 endTier_, uint256 timestamp_)
@@ -93,6 +93,6 @@ contract ReadWriteTier is TierV2 {
         pure
         returns (uint256 updatedReport)
     {
-        return TierReport.updateReportWithTierAtTime(report_, startTier_, endTier_, timestamp_);
+        return LibTierReport.updateReportWithTierAtTime(report_, startTier_, endTier_, timestamp_);
     }
 }
