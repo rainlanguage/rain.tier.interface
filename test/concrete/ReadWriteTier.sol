@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: CAL
 pragma solidity =0.8.25;
 
-import {ITierV2, TierV2} from "src/abstract/TierV2.sol";
-import {LibTierConstants} from "src/lib/LibTierConstants.sol";
-import {LibTierReport} from "src/lib/LibTierReport.sol";
+import {ITierV2, TierV2} from "../../src/abstract/TierV2.sol";
+import {LibTierConstants} from "../../src/lib/LibTierConstants.sol";
+import {LibTierReport} from "../../src/lib/LibTierReport.sol";
 
 /// @title ReadWriteTier
 ///
