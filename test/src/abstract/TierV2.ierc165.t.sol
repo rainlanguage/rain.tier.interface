@@ -1,4 +1,5 @@
-// SPDX-License-Identifier: CAL
+// SPDX-License-Identifier: LicenseRef-DCL-1.0
+// SPDX-FileCopyrightText: Copyright (c) 2020 thedavidmeister
 pragma solidity =0.8.25;
 
 import {Test} from "forge-std/Test.sol";
@@ -6,17 +7,6 @@ import {Test} from "forge-std/Test.sol";
 import {IERC165Upgradeable as IERC165} from
     "openzeppelin-contracts-upgradeable/contracts/utils/introspection/IERC165Upgradeable.sol";
 import {ITierV2, TierV2} from "src/abstract/TierV2.sol";
-// import {
-//     RainterpreterExpressionDeployerNPE2,
-//     RainterpreterExpressionDeployerNPE2ConstructionConfigV2
-// } from "src/concrete/RainterpreterExpressionDeployerNPE2.sol";
-// import {IParserPragmaV1} from "rain.interpreter.interface/interface/unstable/IParserPragmaV1.sol";
-// import {IParserV2} from "rain.interpreter.interface/interface/unstable/IParserV2.sol";
-// import {IExpressionDeployerV4} from "rain.interpreter.interface/interface/unstable/IExpressionDeployerV4.sol";
-// import {IDescribedByMetaV1} from "rain.metadata/interface/unstable/IDescribedByMetaV1.sol";
-// import {RainterpreterNPE2} from "src/concrete/RainterpreterNPE2.sol";
-// import {RainterpreterParserNPE2} from "src/concrete/RainterpreterParserNPE2.sol";
-// import {RainterpreterStoreNPE2} from "src/concrete/RainterpreterStoreNPE2.sol";
 
 contract TestTierV2 is TierV2 {
     function report(address, uint256[] memory) public view virtual override returns (uint256) {
